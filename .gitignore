@@ -1,5 +1,8 @@
 *.py[cod]
 
+# CSV files
+*.csv
+
 # C extensions
 *.so
 
