@@ -12,6 +12,12 @@ class LLog:
                 self.add_vocab(row[0], row[1], row[2], row[3])
         else:
             self.manual_entry()    
+    def __str__(self):
+        rep = ""
+        for pos in self.vocabs:
+            for entry in self.vocabs[ pos ]:
+                rep += "%s(%s): (%s.) %s\n" % (entry[0], entry[2], pos, entry[1])
+        return rep
 
     def add_vocab(self, term, pos, definition, kanji):
         if not pos in self.vocabs:
@@ -26,6 +32,20 @@ class LLog:
         for key in self.vocabs:
             self.print_pos(key)
 
+    def print_html(self):
+        rep = "<html><head><title>JAPN 201</title></head><p>"
+        for pos in self.vocabs:
+            rep+="<h2>%s</h2><ul>" % pos
+            for entry in self.vocabs[ pos ]:
+                if entry[2] != '':
+                    rep+= "<li><b>%s<b> (%s): %s" % (entry[0], entry[2], entry[1])
+                else:
+                    rep+= "<li><b>%s<b>: %s" % (entry[0], entry[1])
+
+            rep+="</ul>"
+        rep += "</p></html>"
+        return rep
+
     def manual_entry(self):
         text = raw_input("Please enter [term] [part of speech] [definition] [kanji], separated by commai\n")
         while not text == 'quit':
@@ -38,5 +58,5 @@ class LLog:
                     break
 
 if __name__ == "__main__":
-    log = LLog()
-    log.print_all()
+    log = LLog('japn201vocab.csv')
+    print(str(log))

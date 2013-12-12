@@ -15,7 +15,7 @@ class SLHTTPRequestHandler(BaseHTTPRequestHandler):
             self.end_headers()
 
             # Send Content
-            self.wfile.write(str(log))
+            self.wfile.write(log.print_html())
             return
         except IOError:
             self.send_error(404, 'file not found')
